@@ -1,6 +1,6 @@
 #javascript: unload
 
-## The question: How can I make my npm-module run a piece of code when my javascript-process exits?
+## The question: How can I make my npm-module to run a piece of code when my javascript-process exits?
 ## The answer: Add a handler to ```process.on('exit')```.
 
 So, problem solved..
@@ -16,7 +16,7 @@ Well, we now also need to use ```window.onunload``` which wont work on safari-mo
 And what about electron? And what about react-native? What about cordova/phonegap?
 
 # The Solution
-Lets create a npm-module which maps all these cases in one simple function.
+Lets create a npm-module for this which works in **all javascript environments**.
 
 ```js
   var unload = require('unload');
