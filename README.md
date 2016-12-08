@@ -19,7 +19,7 @@ And what about electron? And what about react-native? What about cordova/phonega
 Lets create a npm-module which maps all these cases in one simple function.
 
 ```js
-  var unload=require('unload');
+  var unload = require('unload');
   unload(function(){
     console.log("Ouch, I'm dying.");
   });
@@ -27,7 +27,7 @@ Lets create a npm-module which maps all these cases in one simple function.
 
 If you want to remove the eventListeners, call the returned function.
 ```js
-  var unload=require('unload');
+  var unload = require('unload');
   var stopListen = unload(function(){
     console.log("Ouch, I'm dying.");
   });
