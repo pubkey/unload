@@ -2,7 +2,7 @@
 
 var envs={
   node: require('./nodeJS.js'),
-  browser: require('./browser.js)
+  browser: require('./browser.js')
 };
           
           
