@@ -1,6 +1,6 @@
 #javascript: unload
 
-## The question: How can I make my npm-module to run a piece of code when my javascript-process exits?
+## The question: How can I make my npm-module to run a piece of code once when my javascript-process exits?
 ## The answer: Add a handler to ```process.on('exit')```.
 
 So, problem solved..
@@ -8,12 +8,15 @@ So, problem solved..
 ..but wait, this will only run if the nodejs-process runs the .exit()-function.
 But I want my handler to also run when an exception exits the process.
 Ok, so I will also use ```process.on('uncaughtException')```.
-But this wont work when Ctrl-C is pressed, so now I also need ```process.on('SIGINT')```. 
+But this wont work when Ctrl-C is pressed, so now I also need ```process.on('SIGINT')```.
+And what happend when i want to run async-code onExit where ```process.on('beforeExit')```
+must be used?
 
-But what happens if my npm-module is used in the browser?
-
+### And what happens if my npm-module is used in the browser?
 Well, we now also need to use ```window.onunload``` which wont work on safari-mobile where we need a workarround.
 And what about electron? And what about react-native? What about cordova/phonegap?
+
+And also it must be assured that our execude-on-exit-code runs exactly **once**.
 
 # The Solution
 Lets create a npm-module for this which works in **all javascript environments**.
@@ -31,9 +34,6 @@ If you want to remove the eventListeners, call the returned function.
   var stopListen = unload(function(){
     console.log("Ouch, I'm dying.");
   });
-  
+
   stopListen(); // removes the event-listeners
 ```
-
-
-
