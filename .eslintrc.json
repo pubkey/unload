@@ -1,0 +1,35 @@
+{
+    "esversion": 5,
+    "esnext": false,
+    "env": {
+        "browser": true,
+        "node": true,
+        "amd": false
+    },
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4, {
+                "SwitchCase": 1
+            }
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": "off",
+        "curly": ["error", "multi-or-nest"],
+        "no-throw-literal": "error"
+    }
+}
