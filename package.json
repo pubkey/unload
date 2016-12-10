@@ -10,7 +10,7 @@
     "build:min": "uglifyjs --compress --mangle --output dist/unload.min.js -- ./dist/unload.js",
     "pingserver": "node ./test/helper/ping-server.node.js",
     "pretest": "npm run build",
-    "test": "concurrently \"npm run pingserver\"",
+    "test": "concurrently \"npm run pingserver\" \"npm run gulp\"",
     "test:node": "npm-run-all test:node:*",
     "test:node:exception": "node "
   },
