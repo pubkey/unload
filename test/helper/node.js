@@ -6,7 +6,7 @@ process.argv.shift();
 
 var mode = process.argv.shift();
 
-var stopListening = unload(function(e) {
+var stopListening = unload.add(function(e) {
     return request('http://localhost:23230/');
 });
 

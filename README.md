@@ -24,6 +24,8 @@ When electron:
 app.on('window-all-closed')
 ```
 
+
+
 # Usage
 
 Installation:
@@ -34,7 +36,7 @@ Add a function which runs when the process exits:
 
 ```javascript
 var unload = require('unload');
-unload(function(){
+unload.add(function(){
   console.log("Ouch, I'm dying.");
 });
 ```
@@ -43,7 +45,7 @@ Add and remove the function (It will no longer run when the process exits):
 
 ```javascript
 var unload = require('unload');
-var stopListen = unload(function(){
+var stopListen = unload.add(function(){
   console.log("Ouch, I'm dying.");
 });
 
@@ -54,7 +56,7 @@ Run all previously added functions:
 
 ```javascript
 var unload = require('unload');
-var stopListen = unload(function(){
+unload.add(function(){
   console.log("Ouch, I'm dying.");
 });
 
@@ -64,7 +66,7 @@ unload.runAll();
 Remove all added functions (They will no longer run when the process exits):
 ```javascript
 var unload = require('unload');
-var stopListen = unload(function(){
+unload.add(function(){
   console.log("Ouch, I'm dying.");
 });
 
