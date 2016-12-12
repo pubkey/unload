@@ -1,39 +1,72 @@
-#javascript: unload
+# javascript: unload
 
-## The question: How can I make my npm-module to run a piece of code once when my javascript-process exits?
-## The answer: Add a handler to ```process.on('exit')```.
+Run a piece of code whenever the javascript-process stops/exits/quits. On **browsers, nodejs, election, react-native, .net-core**. It also ensures that the exit-function is called only **once**.
 
-So, problem solved..
+You should use this module when your write a npm-library where you dont know in which environments the users will run it.
 
-..but wait, this will only run if the nodejs-process runs the .exit()-function.
-But I want my handler to also run when an exception exits the process.
-Ok, so I will also use ```process.on('uncaughtException')```.
-But this wont work when Ctrl-C is pressed, so now I also need ```process.on('SIGINT')```.
-And what happend when i want to run async-code onExit where ```process.on('beforeExit')```
-must be used?
+# What does `unload` handle?
 
-### And what happens if my npm-module is used in the browser?
-Well, we now also need to use ```window.onunload``` which wont work on safari-mobile where we need a workarround.
-And what about electron? And what about react-native? What about cordova/phonegap?
-
-And also it must be assured that our execude-on-exit-code runs exactly **once**.
-
-# The Solution
-Lets create a npm-module for this which works in **all javascript environments**.
-
+When nodejs:
 ```js
-  var unload = require('unload');
-  unload(function(){
-    console.log("Ouch, I'm dying.");
-  });
+process.on('beforeExit')
+process.on('exit')
+process.on('SIGINT')
+process.on('uncaughtException')
 ```
 
-If you want to remove the eventListeners, call the returned function.
+When browser:
 ```js
-  var unload = require('unload');
-  var stopListen = unload(function(){
-    console.log("Ouch, I'm dying.");
-  });
+window.addEventListener('beforeunload')
+```
 
-  stopListen(); // removes the event-listeners
+When electron:
+```js
+app.on('window-all-closed')
+```
+
+# Usage
+
+Installation:
+
+`npm install unload --save`
+
+Add a function which runs when the process exits:
+
+```javascript
+var unload = require('unload');
+unload(function(){
+  console.log("Ouch, I'm dying.");
+});
+```
+
+Add and remove the function (It will no longer run when the process exits):
+
+```javascript
+var unload = require('unload');
+var stopListen = unload(function(){
+  console.log("Ouch, I'm dying.");
+});
+
+stopListen(); // removes the event-listeners
+```
+
+Run all previously added functions:
+
+```javascript
+var unload = require('unload');
+var stopListen = unload(function(){
+  console.log("Ouch, I'm dying.");
+});
+
+unload.runAll();
+```
+
+Remove all added functions (They will no longer run when the process exits):
+```javascript
+var unload = require('unload');
+var stopListen = unload(function(){
+  console.log("Ouch, I'm dying.");
+});
+
+unload.removeAll();
 ```

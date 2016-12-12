@@ -2,14 +2,14 @@ module.exports = (function() {
     var exports = {};
 
     exports.add = function(fn) {
-        var ret = [];
+        var ret = {};
         if (
             typeof window === 'object' &&
             window.addEventListener &&
             typeof window.addEventListener === 'function'
         ) {
             window.addEventListener('beforeunload', fn, false);
-            ret.push('beforeunload');
+            ret.beforeunload = fn;
         }
 
         /**
@@ -20,8 +20,9 @@ module.exports = (function() {
         return ret;
     };
 
-    exports.remove = function(fn, listenerKeys) {
-        listenerKeys.forEach(function(key) {
+    exports.remove = function(fn, listeners) {
+        Object.keys(listeners).forEach(function(key) {
+            var fn = listeners[key];
             switch (key) {
                 case 'beforeunload':
                     window.removeEventListener('beforeunload',
@@ -32,8 +33,5 @@ module.exports = (function() {
             }
         });
     };
-
-
     return exports;
-
 })();

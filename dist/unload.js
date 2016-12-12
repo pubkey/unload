@@ -185,14 +185,14 @@ module.exports = (function() {
     var exports = {};
 
     exports.add = function(fn) {
-        var ret = [];
+        var ret = {};
         if (
             typeof window === 'object' &&
             window.addEventListener &&
             typeof window.addEventListener === 'function'
         ) {
             window.addEventListener('beforeunload', fn, false);
-            ret.push('beforeunload');
+            ret.beforeunload = fn;
         }
 
         /**
@@ -203,8 +203,9 @@ module.exports = (function() {
         return ret;
     };
 
-    exports.remove = function(fn, listenerKeys) {
-        listenerKeys.forEach(function(key) {
+    exports.remove = function(fn, listeners) {
+        Object.keys(listeners).forEach(function(key) {
+            var fn = listeners[key];
             switch (key) {
                 case 'beforeunload':
                     window.removeEventListener('beforeunload',
@@ -215,10 +216,7 @@ module.exports = (function() {
             }
         });
     };
-
-
     return exports;
-
 })();
 
 },{}],3:[function(require,module,exports){
@@ -230,6 +228,8 @@ module.exports = (function(
     envs
 ) {
     var unloaded = false;
+    var count = 0;
+    var cache = {};
 
     /**
      * start listening with the handler
@@ -237,6 +237,7 @@ module.exports = (function(
      * @return {Function} stopListening : a function which is used to stop listening
      */
     var exports = function(fn) {
+        count++;
 
         // wrap fn to ensure it executes once
         var fnWrapped = function(arg1, arg2, arg3) {
@@ -254,7 +255,29 @@ module.exports = (function(
                 envs[envKey].remove(fnWrapped, hasListeners[envKey]);
             });
         };
+
+        cache[count] = {
+            fn: fn,
+            remove: retFn,
+            listeners: hasListeners
+        };
+
+        return retFn;
     };
+
+    exports.runAll = function() {
+        if (unloaded) return;
+        unloaded = true;
+        Object.keys(cache).forEach(function(key) {
+            cache[key].fn();
+        });
+    }
+
+    exports.removeAll = function() {
+        Object.keys(cache).forEach(function(key) {
+            cache[key].remove();
+        });
+    }
 
     return exports;
 
@@ -269,51 +292,60 @@ module.exports = (function() {
     var exports = {};
 
     exports.add = function(fn) {
-        var ret = [];
+        var ret = {};
         if (
             typeof process === 'object' &&
             process.on &&
             typeof process.on === 'function'
         ) {
-            process.on('beforeExit', function(e) {
+            ret.beforeExit = function(e) {
                 var maybePromise = fn(e);
                 Promise.resolve(maybePromise)
                     .then(function() {
                         process.exit();
                     });
-            });
-            ret.push('beforeExit');
+            }
+            process.on('beforeExit', ret.beforeExit);
+
+            ret.exit = function(e) {
+                var maybePromise = fn(e);
+                Promise.resolve(maybePromise);
+            };
+            process.on('exit', ret.exit);
+
 
             //catches ctrl+c event
-            process.on('SIGINT', function(e) {
+            ret.SIGINT = function(e) {
                 var maybePromise = fn(e);
                 Promise.resolve(maybePromise)
                     .then(function() {
                         process.exit();
                     });
-            });
-            ret.push('SIGINT');
+            };
+            process.on('SIGINT', ret.SIGINT);
 
             //catches uncaught exceptions
-            process.on('uncaughtException', function(e) {
+            ret.uncaughtException = function(e) {
                 var maybePromise = fn(e);
                 Promise.resolve(maybePromise)
                     .then(function() {
                         process.exit();
                     });
-            });
-            ret.push('uncaughtException');
+            };
+            process.on('uncaughtException', ret.uncaughtException);
         }
-
         return ret;
     };
 
-    exports.remove = function(fn, listenerKeys) {
-        listenerKeys.forEach(function(key) {
+    exports.remove = function(fn, listeners) {
+        Object.keys(listeners).forEach(function(key) {
+            var fn = listeners[key];
             switch (key) {
                 case 'beforeExit':
                 case 'SIGINT':
                 case 'uncaughtException':
+                case 'exit':
+                    console.log('remove');
                     process.removeListener(key, fn);
                     break;
             }
