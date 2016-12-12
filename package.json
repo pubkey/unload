@@ -10,7 +10,7 @@
     "build:min": "uglifyjs --compress --mangle --output dist/unload.min.js -- ./dist/unload.js",
     "pingserver": "node ./test/helper/ping-server.node.js",
     "pretest": "npm run build",
-    "test": "concurrently  --kill-others -s last \"npm run pingserver\" \"mocha -b test/\""
+    "test": "concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test/\""
   },
   "repository": {
     "type": "git",

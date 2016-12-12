@@ -227,6 +227,7 @@ window['unload'] = unload;
 module.exports = (function(
     envs
 ) {
+    var exports = {};
     var unloaded = false;
     var count = 0;
     var cache = {};
@@ -236,7 +237,7 @@ module.exports = (function(
      * @param  {Function({})} fn the handler which takes the unload-event as attr
      * @return {Function} stopListening : a function which is used to stop listening
      */
-    var exports = function(fn) {
+    exports.add = function(fn) {
         count++;
 
         // wrap fn to ensure it executes once
