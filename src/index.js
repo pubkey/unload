@@ -3,8 +3,13 @@ module.exports = (function(
 ) {
     var exports = {};
     var unloaded = false;
+    var debug = false;
     var count = 0;
     var cache = {};
+
+    exports.debug = function() {
+        debug = true;
+    };
 
     /**
      * start listening with the handler
@@ -29,6 +34,12 @@ module.exports = (function(
             Object.keys(hasListeners).forEach(function(envKey) {
                 envs[envKey].remove(fnWrapped, hasListeners[envKey]);
             });
+
+            debug && console.log('unload.stopListening()');
+            debug && console.dir(cache[count]);
+        };
+        retFn.run = function() {
+            fnWrapped();
         };
 
         cache[count] = {
@@ -36,6 +47,9 @@ module.exports = (function(
             remove: retFn,
             listeners: hasListeners
         };
+
+        debug && console.log('unload.add()');
+        debug && console.dir(cache[count]);
 
         return retFn;
     };
@@ -46,13 +60,13 @@ module.exports = (function(
         Object.keys(cache).forEach(function(key) {
             cache[key].fn();
         });
-    }
+    };
 
     exports.removeAll = function() {
         Object.keys(cache).forEach(function(key) {
             cache[key].remove();
         });
-    }
+    };
 
     return exports;
 

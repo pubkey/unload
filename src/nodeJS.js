@@ -14,7 +14,7 @@ module.exports = (function() {
                     .then(function() {
                         process.exit();
                     });
-            }
+            };
             process.on('beforeExit', ret.beforeExit);
 
             ret.exit = function(e) {
@@ -55,7 +55,6 @@ module.exports = (function() {
                 case 'SIGINT':
                 case 'uncaughtException':
                 case 'exit':
-                    console.log('remove');
                     process.removeListener(key, fn);
                     break;
             }
