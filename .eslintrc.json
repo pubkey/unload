@@ -1,10 +1,8 @@
 {
-    "esversion": 5,
-    "esnext": false,
     "env": {
         "browser": true,
-        "node": true,
-        "amd": false
+        "es6": true,
+        "node": true
     },
     "parserOptions": {
         "sourceType": "module"
@@ -13,9 +11,13 @@
         "indent": [
             "error",
             4, {
+                "MemberExpression": "off",
                 "SwitchCase": 1
             }
         ],
+        "camelcase": ["error", {"properties": "never"}],
+        "eqeqeq": ["error", "always"],
+        "padded-blocks": ["error", "never"],
         "linebreak-style": [
             "error",
             "unix"
@@ -30,6 +32,10 @@
         ],
         "no-console": "off",
         "curly": ["error", "multi-or-nest"],
-        "no-throw-literal": "error"
+        "no-throw-literal": "error",
+        "prefer-const": "error",
+        "no-unused-vars": "error",
+        "no-implicit-globals": "error",
+        "no-global-assign": "error"
     }
 }

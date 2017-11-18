@@ -6,7 +6,7 @@ process.argv.shift();
 
 var mode = process.argv.shift();
 
-var stopListening = unload.add(function(e) {
+var stopListening = unload.add(function() {
     return request('http://localhost:23230/');
 });
 
@@ -60,5 +60,4 @@ switch (mode) {
             console.log('I run out');
         }, 300);
         break;
-
 }

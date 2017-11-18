@@ -169,6 +169,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -295,13 +299,12 @@ module.exports = (function(
     };
 
     return exports;
-
 })({
-    node: require('./nodeJS.js'),
+    node: require('./node.js'),
     browser: require('./browser.js')
 });
 
-},{"./browser.js":2,"./nodeJS.js":5}],5:[function(require,module,exports){
+},{"./browser.js":2,"./node.js":5}],5:[function(require,module,exports){
 (function (process){
 module.exports = (function() {
     var exports = {};
@@ -368,7 +371,6 @@ module.exports = (function() {
 
 
     return exports;
-
 })();
 
 }).call(this,require('_process'))

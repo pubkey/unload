@@ -69,8 +69,7 @@ module.exports = (function(
     };
 
     return exports;
-
 })({
-    node: require('./nodeJS.js'),
+    node: require('./node.js'),
     browser: require('./browser.js')
 });

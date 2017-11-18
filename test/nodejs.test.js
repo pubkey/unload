@@ -1,8 +1,6 @@
-var mocha = require('mocha');
 var assert = require('assert');
 var pingCount = require('./helper/getPingCount.node.js');
 var exec = require('child_process').exec;
-var sys = require('util');
 
 var request = require('request-promise-native');
 var unload = require('../src/index.js');
@@ -11,11 +9,10 @@ var unload = require('../src/index.js');
 describe('nodejs.test.js', function() {
     var startCounter = 0;
     describe('init', function() {
-
         it('w8 until pingServer started', function(done) {
             var check = function() {
                 pingCount()
-                    .then(function(c) {
+                    .then(function() {
                         done();
                     })
                     .catch(function() {
@@ -34,7 +31,7 @@ describe('nodejs.test.js', function() {
 
     describe('basic', function() {
         it('exception', function(done) {
-            exec('node ./test/helper/node.js exception', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js exception', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
@@ -43,7 +40,7 @@ describe('nodejs.test.js', function() {
             });
         });
         it('runout', function(done) {
-            exec('node ./test/helper/node.js runout', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js runout', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
@@ -52,7 +49,7 @@ describe('nodejs.test.js', function() {
             });
         });
         it('stopBefore', function(done) {
-            exec('node ./test/helper/node.js stopBefore', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js stopBefore', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter, c);
                     done();
@@ -60,7 +57,7 @@ describe('nodejs.test.js', function() {
             });
         });
         it('exit', function(done) {
-            exec('node ./test/helper/node.js exit', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js exit', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter, c);
                     done();
@@ -68,7 +65,7 @@ describe('nodejs.test.js', function() {
             });
         });
         it('force run', function(done) {
-            var stopListening = unload.add(function(e) {
+            var stopListening = unload.add(function() {
                 return request('http://localhost:23230/');
             });
             stopListening.run();
@@ -84,7 +81,7 @@ describe('nodejs.test.js', function() {
 
     describe('runAll', function() {
         it('should run all', function(done) {
-            exec('node ./test/helper/node.js runAll', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js runAll', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
@@ -93,7 +90,7 @@ describe('nodejs.test.js', function() {
             });
         });
         it('should run all twice only once', function(done) {
-            exec('node ./test/helper/node.js runAlltwice', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js runAlltwice', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
@@ -102,10 +99,9 @@ describe('nodejs.test.js', function() {
             });
         });
     });
-
     describe('removeAll', function() {
         it('should remove all', function(done) {
-            exec('node ./test/helper/node.js removeAll', function(error, stdout, stderr) {
+            exec('node ./test/helper/node.js removeAll', function() {
                 pingCount().then(function(c) {
                     assert.equal(startCounter, c);
                     done();
@@ -113,5 +109,4 @@ describe('nodejs.test.js', function() {
             });
         });
     });
-
 });
