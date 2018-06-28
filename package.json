@@ -10,7 +10,7 @@
     "build:min": "uglifyjs --compress --mangle --output dist/unload.min.js -- ./dist/unload.js",
     "pingserver": "node ./test/helper/ping-server.node.js",
     "pretest": "npm run build",
-    "test": "concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test/\"",
+    "test": "concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test/nodejs.test.js\"",
     "test:typings": "npm run build && mocha ./test/typings.test.js -b --timeout 12000 --exit"
   },
   "repository": {

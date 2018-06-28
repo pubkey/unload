@@ -6,7 +6,7 @@ const assert = require('assert');
 const path = require('path');
 const AsyncTestUtil = require('async-test-util');
 
-describe('typings.test.ts', () => {
+describe('typings.test.js', () => {
     const mainPath = path.join(__dirname, '../');
     const codeBase = `
         import unload from '${mainPath}';
