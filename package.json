@@ -10,7 +10,8 @@
     "build:min": "uglifyjs --compress --mangle --output dist/unload.min.js -- ./dist/unload.js",
     "pingserver": "node ./test/helper/ping-server.node.js",
     "pretest": "npm run build",
-    "test": "concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test/\""
+    "test": "concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test/\"",
+    "test:typings": "npm run build && mocha ./test/typings.test.js -b --timeout 12000 --exit"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,9 @@
   "types": "./src/index.d.ts",
   "devDependencies": {
     "assert": "1.4.1",
+    "async-test-util": "^1.6.1",
     "browserify": "14.5.0",
+    "child-process-promise": "^2.2.1",
     "child_process": "1.0.2",
     "concurrently": "3.5.0",
     "eslint": "4.11.0",
@@ -51,6 +54,8 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "rimraf": "2.6.2",
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2",
     "uglify-js": "3.1.9",
     "util": "0.10.3",
     "watch": "1.0.2",
