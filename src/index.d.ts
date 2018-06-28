@@ -1,12 +1,9 @@
-export function add(runMe: Function): Function;
+declare interface Unload {
+    add(fn: () => void): () => void
+    runAll(): void
+    removeAll(): void
+}
 
-export function runAll()
-export function removeAll()
+declare const unload: Unload
 
-declare const _default: {
-    add,
-    runAll,
-    removeAll
-};
-
-export default _default;
+export = unload
