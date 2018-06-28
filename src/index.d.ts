@@ -3,8 +3,8 @@ declare interface Unload {
     runAll(): void
     removeAll(): void
     debug(): void;
-}
+};
 
-declare const unload: Unload
+declare const unload: Unload;
 
-export = unload
+export default unload;
