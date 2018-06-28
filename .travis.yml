@@ -3,7 +3,7 @@ sudo:            required
 os:
   - linux
 node_js:
-  - "9.4.0"
+  - "10.0.0"
 script:
 - travis_retry npm install --depth 0 --silent
 - npm run lint
