@@ -9,7 +9,7 @@ const AsyncTestUtil = require('async-test-util');
 describe('typings.test.js', () => {
     const mainPath = path.join(__dirname, '../');
     const codeBase = `
-        import unload from '${mainPath}';
+        import unload = require('${mainPath}');
     `;
     const transpileCode = async (code) => {
         const spawn = require('child-process-promise').spawn;

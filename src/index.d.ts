@@ -7,4 +7,4 @@ declare interface Unload {
 
 declare const unload: Unload;
 
-export default unload;
+export = unload;
