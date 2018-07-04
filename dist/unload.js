@@ -298,6 +298,16 @@ module.exports = (function(
         });
     };
 
+    // used for testing purposes
+    exports._getCache = function(){
+        return cache;
+    };
+
+    // used for testing purposes
+    exports._resetUnloaded = function(){
+        unloaded = false;
+    };
+
     return exports;
 })({
     node: require('./node.js'),
