@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <script src="http://localhost:8080/dist/browserify.js"></script>
+    <script>
+        var url = 'http://localhost:23230/';
+
+        console.log('add unload function');
+
+        var stop = window.unload.add(function () {
+            console.log('run unload-function');
+            var request = new XMLHttpRequest();
+            request.open('GET', url, false);  // 'false' makes the request synchronous
+            request.send(null);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>unload test-iframe</h1>
+</body>
+
+
+
+</html>

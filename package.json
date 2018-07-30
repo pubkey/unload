@@ -12,8 +12,10 @@
     "build": "npm run clear && concurrently \"npm run build:es6\" \"npm run build:es5\" \"npm run build:test\" && npm run build:browser",
     "clear": "rimraf -rf ./dist",
     "pingserver": "node ./test/helper/ping-server.node.js",
-    "test": "npm run build && concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test_tmp/nodejs.test.js\"",
-    "test:typings": "npm run build && mocha ./test_tmp/typings.test.js -b --timeout 12000 --exit"
+    "test:typings": "npm run build && mocha ./test_tmp/typings.test.js -b --timeout 12000 --exit",
+    "test:node": "npm run build && concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test_tmp/nodejs.test.js\"",
+    "test:browser:server": "http-server . -p 8080",
+    "test:browser": "npm run build && concurrently --kill-others -s first \"npm run test:browser:server\" \"npm run pingserver\" \"karma start ./config/karma.conf.js --single-run\""
   },
   "repository": {
     "type": "git",
@@ -63,6 +65,7 @@
     "child-process-promise": "2.2.1",
     "child_process": "1.0.2",
     "concurrently": "3.6.1",
+    "cors": "^2.8.4",
     "cross-env": "5.2.0",
     "eslint": "5.2.0",
     "express": "4.16.3",

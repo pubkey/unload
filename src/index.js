@@ -22,6 +22,7 @@ export function add(fn) {
         LISTENERS.delete(fn);
     };
     removeFn.run = () => {
+        removeFn();
         return fn();
     };
     return removeFn;
