@@ -8,23 +8,17 @@ You should use this module when your write a npm-library where you dont know in 
 
 When nodejs:
 ```js
-process.on('beforeExit')
-process.on('exit')
-process.on('SIGINT')
-process.on('uncaughtException')
+process.on('beforeExit');
+process.on('exit');
+process.on('SIGINT'); // catches ctrl+c event
+process.on('uncaughtException'); // catches uncaught exceptions
 ```
 
 When browser:
 ```js
-window.addEventListener('beforeunload')
+window.addEventListener('beforeunload'); // closing of normal browser-window
+window.addEventListener('unload'); // closed inside of iframe
 ```
-
-When electron:
-```js
-app.on('window-all-closed')
-```
-
-
 
 # Usage
 
@@ -45,11 +39,11 @@ Add and remove the function (It will no longer run when the process exits):
 
 ```javascript
 var unload = require('unload');
-var stopListen = unload.add(function(){
+var ret = unload.add(function(){
     console.log('Ouch, I\'m dying.');
 });
 
-stopListen(); // removes the event-listeners
+ret.remove(); // removes the event-handler
 ```
 
 Run all previously added functions:

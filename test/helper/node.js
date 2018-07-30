@@ -47,7 +47,7 @@ switch (mode) {
     case 'stopBefore':
         const stopListening = addUnloadFunction();
         setTimeout(function () {
-            stopListening();
+            stopListening.remove();
         }, 200);
         setTimeout(function () {
             console.log('I run out');

@@ -29,7 +29,9 @@ describe('nodejs.test.js', function () {
         it('add / remove', () => {
             const fn = () => { };
             const ret = unload.add(fn);
-            ret();
+            ret.remove();
+            const ret2 = unload.add(fn);
+            ret2.run();
             unload.removeAll();
         });
         it('.runAll()', async () => {

@@ -56,12 +56,13 @@ describe('typings.test.js', () => {
         it('should bet ok use some methods from the docs', async () => {
             const code = `
                 (async()=>{
-                    const stopListen = unload.add(function(){
+                    const added = unload.add(function(){
                         console.log('Ouch, Im dying.');
                     });
-                    stopListen();
                     unload.runAll();
                     unload.removeAll();
+                    added.run();
+                    added.remove();
                 })();
             `;
             await transpileCode(code);

@@ -18,14 +18,14 @@ export function add(fn) {
         throw new Error('The "listener" argument must be of type Function. Received type ' + typeof fn);
     LISTENERS.add(fn);
 
-    const removeFn = function () {
-        LISTENERS.delete(fn);
+    const addReturn = {
+        remove: () => LISTENERS.delete(fn),
+        run: () => {
+            LISTENERS.delete(fn);
+            return fn();
+        }
     };
-    removeFn.run = () => {
-        removeFn();
-        return fn();
-    };
-    return removeFn;
+    return addReturn;
 }
 
 export function runAll() {
