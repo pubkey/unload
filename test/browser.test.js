@@ -55,4 +55,42 @@ describe('browser.test.js', () => {
             return countAfter > countBefore;
         }, 0, 200);
     });
+    it('should not crash inside of a webworker', async () => {
+        // https://stackoverflow.com/a/40581869/3443137
+        function XHRWorker(url, ready, scope) {
+            return new Promise(res => {
+                const oReq = new XMLHttpRequest();
+                oReq.addEventListener('load', function () {
+                    const worker = new Worker(window.URL.createObjectURL(new Blob([this.responseText])));
+                    if (ready) {
+                        ready.call(scope, worker);
+                    }
+                    res(worker);
+                }, oReq);
+                oReq.open('get', url, true);
+                oReq.send();
+            });
+        }
+
+
+        const workerUrl = 'http://127.0.0.1:8080/test_tmp/worker.js';
+
+
+        const worker = await XHRWorker(workerUrl + '?t=' + new Date().getTime());
+        worker.onerror = event => {
+            throw new Error('worker: ' + event.message + ' (' + event.filename + ':' + event.lineno + ')');
+        };
+        await new Promise(res => {
+            worker.addEventListener('message', msg => {
+                if (msg.data === 'WORKER DONE') {
+                    // worker has done
+                    res();
+                }
+            }, false);
+            worker.postMessage({
+                'cmd': 'start',
+                'msg': {}
+            });
+        });
+    });
 });

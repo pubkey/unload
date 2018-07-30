@@ -45,6 +45,16 @@ describe('nodejs.test.js', function () {
             assert.ok(did);
             unload.removeAll();
         });
+        it('.getSize()', () => {
+            const s = unload.getSize();
+            assert.deepEqual(s, 0);
+            unload.add(() => { });
+            const s2 = unload.getSize();
+            assert.deepEqual(s2, 1);
+            unload.removeAll();
+            const s3 = unload.getSize();
+            assert.deepEqual(s3, 0);
+        });
     });
     describe('basic', function () {
         it('exception', function (done) {

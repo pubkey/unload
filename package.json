@@ -9,13 +9,15 @@
     "build:es5": "cross-env NODE_ENV=es5 node node_modules/babel-cli/bin/babel.js src --out-dir dist/lib",
     "build:test": "cross-env NODE_ENV=es5 node node_modules/babel-cli/bin/babel.js test --out-dir test_tmp",
     "build:browser": "browserify dist/lib/index.browserify.js > dist/browserify.js",
-    "build": "npm run clear && concurrently \"npm run build:es6\" \"npm run build:es5\" \"npm run build:test\" && npm run build:browser",
+    "build:worker": "browserify test/helper/worker.js > test_tmp/worker.js",
+    "build": "npm run clear && concurrently \"npm run build:es6\" \"npm run build:es5\" \"npm run build:test\" && npm run build:browser && npm run build:worker",
     "clear": "rimraf -rf ./dist",
     "pingserver": "node ./test/helper/ping-server.node.js",
     "test:typings": "npm run build && mocha ./test_tmp/typings.test.js -b --timeout 12000 --exit",
     "test:node": "npm run build && concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test_tmp/nodejs.test.js\"",
-    "test:browser:server": "http-server . -p 8080",
-    "test:browser": "npm run build && concurrently --kill-others -s first \"npm run test:browser:server\" \"npm run pingserver\" \"karma start ./config/karma.conf.js --single-run\""
+    "test:browser:server": "http-server . -p 8080 --cors --silent",
+    "test:browser": "npm run build && concurrently --kill-others -s first \"npm run test:browser:server\" \"npm run pingserver\" \"karma start ./config/karma.conf.js --single-run\"",
+    "test": "npm run test:node && npm run test:browser"
   },
   "repository": {
     "type": "git",

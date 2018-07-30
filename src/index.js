@@ -40,3 +40,7 @@ export function runAll() {
 export function removeAll() {
     LISTENERS.clear();
 }
+
+export function getSize() {
+    return LISTENERS.size;
+}

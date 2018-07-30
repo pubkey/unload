@@ -2,10 +2,8 @@ declare interface Unload {
     add(fn: () => void): () => void;
     runAll(): void;
     removeAll(): void;
-    debug(): void;
 
-    _getCache(): any;
-    _resetUnloaded(): void;
+    getSize(): number;
 };
 
 declare const unload: Unload;

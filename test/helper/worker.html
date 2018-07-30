@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <script>
+        const workerUrl = 'http://127.0.0.1:8080/test_tmp/worker.js';
+        async function run() {
+            const worker = new Worker(workerUrl + '?t=' + new Date().getTime());
+            worker.onerror = event => {
+                throw new Error('worker: ' + event.message + " (" + event.filename + ":" + event.lineno + ")");
+            };
+            worker.addEventListener('message', msg => {
+                console.log('got message from worker');
+                console.dir(msg);
+            });
+            await new Promise(res => {
+                worker.addEventListener('message', e => {
+                    // run when message returned, so we know the worker has started
+                    setTimeout(() => {
+                        console.log('main: Worker has started');
+                        res();
+                    }, 200);
+                }, false);
+                worker.postMessage({
+                    'cmd': 'start',
+                    'msg': {}
+                });
+            });
+            console.log('run done');
+        }
+        run();
+    </script>
+</head>
+
+<body>
+    <h1>webworker test-site</h1>
+</body>
+
+
+
+</html>
