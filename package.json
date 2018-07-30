@@ -32,7 +32,6 @@
     "beforeExit"
   ],
   "pre-commit": [
-    "test",
     "lint"
   ],
   "main": "./dist/lib/index.js",
