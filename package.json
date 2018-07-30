@@ -5,13 +5,15 @@
   "scripts": {
     "lint": "eslint src test",
     "preversion": "npm run lint && npm run test",
-    "build": "npm-run-all build:*",
-    "build:browserify": "browserify ./src/index.browserify.js > ./dist/unload.js",
-    "build:min": "uglifyjs --compress --mangle --output dist/unload.min.js -- ./dist/unload.js",
+    "build:es6": "rimraf -rf dist/es && cross-env NODE_ENV=es6 babel src --out-dir dist/es",
+    "build:es5": "cross-env NODE_ENV=es5 node node_modules/babel-cli/bin/babel.js src --out-dir dist/lib",
+    "build:test": "cross-env NODE_ENV=es5 node node_modules/babel-cli/bin/babel.js test --out-dir test_tmp",
+    "build:browser": "browserify dist/lib/index.browserify.js > dist/browserify.js",
+    "build": "npm run clear && concurrently \"npm run build:es6\" \"npm run build:es5\" \"npm run build:test\" && npm run build:browser",
+    "clear": "rimraf -rf ./dist",
     "pingserver": "node ./test/helper/ping-server.node.js",
-    "pretest": "npm run build",
-    "test": "concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test/nodejs.test.js\"",
-    "test:typings": "npm run build && mocha ./test/typings.test.js -b --timeout 12000 --exit"
+    "test": "npm run build && concurrently  --kill-others -s first \"npm run pingserver\" \"mocha -b test_tmp/nodejs.test.js\"",
+    "test:typings": "npm run build && mocha ./test_tmp/typings.test.js -b --timeout 12000 --exit"
   },
   "repository": {
     "type": "git",
@@ -31,15 +33,37 @@
     "test",
     "lint"
   ],
-  "main": "src/index.js",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/es/index.js",
   "types": "./src/index.d.ts",
   "devDependencies": {
     "assert": "1.4.1",
     "async-test-util": "1.6.1",
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.3",
+    "babel-eslint": "8.2.6",
+    "babel-loader": "7.1.5",
+    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-es2015-block-scoping": "6.26.0",
+    "babel-plugin-transform-es2015-constants": "6.1.4",
+    "babel-plugin-transform-es3-member-expression-literals": "6.22.0",
+    "babel-plugin-transform-es3-property-literals": "6.22.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-transform-regenerator": "6.26.0",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-es2015-native-modules": "6.9.4",
+    "babel-preset-es2015-rollup": "3.0.0",
+    "babel-preset-es2016": "6.24.1",
+    "babel-preset-es2017": "6.24.1",
+    "babel-preset-latest": "6.24.1",
     "browserify": "16.2.2",
     "child-process-promise": "2.2.1",
     "child_process": "1.0.2",
     "concurrently": "3.6.1",
+    "cross-env": "5.2.0",
     "eslint": "5.2.0",
     "express": "4.16.3",
     "http-server": "0.11.1",
@@ -56,10 +80,19 @@
     "request-promise-native": "1.0.5",
     "rimraf": "2.6.2",
     "ts-node": "7.0.0",
-    "typescript": "2.9.2",
+    "typescript": "3.0.1",
     "uglify-js": "3.4.6",
     "util": "0.11.0",
     "watch": "1.0.2",
     "watchify": "3.11.0"
+  },
+  "dependencies": {
+    "detect-node": "^2.0.3"
+  },
+  "// browser": "this field contains files that will be empty objects in webpack-builds",
+  "browser": {
+    "./src/node.js": false,
+    "./dist/es/node.js": false,
+    "./dist/lib/node.js": false
   }
 }

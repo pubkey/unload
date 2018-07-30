@@ -1,2 +1,2 @@
-var unload = require('./index.js');
+const unload = require('./index.js');
 window['unload'] = unload;

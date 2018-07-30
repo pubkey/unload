@@ -1,76 +1,93 @@
-var assert = require('assert');
-var pingCount = require('./helper/getPingCount.node.js');
-var exec = require('child_process').exec;
+const assert = require('assert');
+const exec = require('child_process').exec;
+const request = require('request-promise-native');
+const AsyncTestUtil = require('async-test-util');
 
-var request = require('request-promise-native');
-var unload = require('../src/index.js');
+const pingCount = require('./helper/getPingCount.node.js');
+const unload = require('../');
 
+describe('nodejs.test.js', function () {
+    let startCounter = 0;
 
-describe('nodejs.test.js', function() {
-    var startCounter = 0;
-    describe('init', function() {
-        it('w8 until pingServer started', function(done) {
-            var check = function() {
-                pingCount()
-                    .then(function() {
-                        done();
-                    })
-                    .catch(function() {
-                        return check();
-                    });
-            };
-            check();
+    describe('init', function () {
+        it('w8 until pingServer started', async () => {
+            let ok = false;
+            while (!ok) {
+                await AsyncTestUtil.wait(200);
+                try {
+                    await pingCount();
+                    ok = true;
+                } catch (err) { }
+            }
+            assert.ok(ok);
         });
-        it('get start-counter', function(done) {
-            pingCount().then(function(c) {
-                startCounter = c;
-                done();
-            });
+        it('get start-counter', async () => {
+            await pingCount();
         });
     });
-
-    describe('basic', function() {
-        it('exception', function(done) {
-            exec('node ./test/helper/node.js exception', function() {
-                pingCount().then(function(c) {
+    describe('internal', () => {
+        it('add / remove', () => {
+            const fn = () => { };
+            const ret = unload.add(fn);
+            ret();
+            unload.removeAll();
+        });
+        it('.runAll()', async () => {
+            let did = false;
+            const fn = function () {
+                setTimeout(function () {
+                    did = true;
+                }, 100);
+            };
+            unload.add(fn);
+            unload.runAll();
+            await AsyncTestUtil.wait(200);
+            assert.ok(did);
+            unload.removeAll();
+        });
+    });
+    describe('basic', function () {
+        it('exception', function (done) {
+            exec('node ./test/helper/node.js exception', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
                     done();
                 });
             });
         });
-        it('runout', function(done) {
-            exec('node ./test/helper/node.js runout', function() {
-                pingCount().then(function(c) {
+        it('runout', function (done) {
+            exec('node ./test/helper/node.js runout', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
                     done();
                 });
             });
         });
-        it('stopBefore', function(done) {
-            exec('node ./test/helper/node.js stopBefore', function() {
-                pingCount().then(function(c) {
+        it('stopBefore', function (done) {
+            exec('node ./test/helper/node.js stopBefore', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter, c);
                     done();
                 });
             });
         });
-        it('exit', function(done) {
-            exec('node ./test/helper/node.js exit', function() {
-                pingCount().then(function(c) {
+        it('exit', function (done) {
+            exec('node ./test/helper/node.js exit', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter, c);
                     done();
                 });
             });
         });
-        it('force run', function(done) {
-            var stopListening = unload.add(function() {
+        it('force run', function (done) {
+            const stopListening = unload.add(function () {
                 return request('http://localhost:23230/');
             });
             stopListening.run();
-            setTimeout(function() {
-                pingCount().then(function(c) {
+            setTimeout(function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
                     done();
@@ -79,19 +96,19 @@ describe('nodejs.test.js', function() {
         });
     });
 
-    describe('runAll', function() {
-        it('should run all', function(done) {
-            exec('node ./test/helper/node.js runAll', function() {
-                pingCount().then(function(c) {
+    describe('runAll', () => {
+        it('should run all', function (done) {
+            exec('node ./test/helper/node.js runAll', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
                     done();
                 });
             });
         });
-        it('should run all twice only once', function(done) {
-            exec('node ./test/helper/node.js runAlltwice', function() {
-                pingCount().then(function(c) {
+        it('should run all twice only once', function (done) {
+            exec('node ./test/helper/node.js runAlltwice', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter + 1, c);
                     startCounter = c;
                     done();
@@ -99,10 +116,10 @@ describe('nodejs.test.js', function() {
             });
         });
     });
-    describe('removeAll', function() {
-        it('should remove all', function(done) {
-            exec('node ./test/helper/node.js removeAll', function() {
-                pingCount().then(function(c) {
+    describe('removeAll', function () {
+        it('should remove all', function (done) {
+            exec('node ./test/helper/node.js removeAll', function () {
+                pingCount().then(function (c) {
                     assert.equal(startCounter, c);
                     done();
                 });

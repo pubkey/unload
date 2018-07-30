@@ -1,7 +1,7 @@
 declare interface Unload {
-    add(fn: () => void): () => void
-    runAll(): void
-    removeAll(): void
+    add(fn: () => void): () => void;
+    runAll(): void;
+    removeAll(): void;
     debug(): void;
 
     _getCache(): any;

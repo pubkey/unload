@@ -1,85 +1,41 @@
-module.exports = (function(
-    envs
-) {
-    var exports = {};
-    var unloaded = false;
-    var debug = false;
-    var count = 0;
-    var cache = {};
+import isNode from 'detect-node';
+import BrowserMethod from './browser.js';
+import NodeMethod from './node.js';
 
-    exports.debug = function() {
-        debug = true;
+const USE_METHOD = isNode ? NodeMethod : BrowserMethod;
+const LISTENERS = new Set();
+
+let startedListening = false;
+function startListening() {
+    if (startedListening) return;
+    startedListening = true;
+    USE_METHOD.add(runAll);
+}
+
+export function add(fn) {
+    startListening();
+    if (typeof fn !== 'function')
+        throw new Error('The "listener" argument must be of type Function. Received type ' + typeof fn);
+    LISTENERS.add(fn);
+
+    const removeFn = function () {
+        LISTENERS.delete(fn);
     };
-
-    /**
-     * start listening with the handler
-     * @param  {Function({})} fn the handler which takes the unload-event as attr
-     * @return {Function} stopListening : a function which is used to stop listening
-     */
-    exports.add = function(fn) {
-        count++;
-
-        // wrap fn to ensure it executes once
-        var fnWrapped = function(arg1, arg2, arg3) {
-            if (unloaded) return;
-            unloaded = true;
-            return fn(arg1, arg2, arg3);
-        };
-
-        var hasListeners = {};
-        Object.keys(envs).forEach(function(envKey) {
-            hasListeners[envKey] = envs[envKey].add(fnWrapped);
-        });
-        var retFn = function stopListening() {
-            Object.keys(hasListeners).forEach(function(envKey) {
-                envs[envKey].remove(fnWrapped, hasListeners[envKey]);
-            });
-
-            debug && console.log('unload.stopListening()');
-            debug && console.dir(cache[count]);
-        };
-        retFn.run = function() {
-            fnWrapped();
-        };
-
-        cache[count] = {
-            fn: fn,
-            remove: retFn,
-            listeners: hasListeners
-        };
-
-        debug && console.log('unload.add()');
-        debug && console.dir(cache[count]);
-
-        return retFn;
+    removeFn.run = () => {
+        return fn();
     };
+    return removeFn;
+}
 
-    exports.runAll = function() {
-        if (unloaded) return;
-        unloaded = true;
-        Object.keys(cache).forEach(function(key) {
-            cache[key].fn();
-        });
-    };
+export function runAll() {
+    const promises = [];
+    LISTENERS.forEach(function (fn) {
+        promises.push(fn());
+        LISTENERS.delete(fn);
+    });
+    return Promise.all(promises);
+}
 
-    exports.removeAll = function() {
-        Object.keys(cache).forEach(function(key) {
-            cache[key].remove();
-        });
-    };
-
-    // used for testing purposes
-    exports._getCache = function(){
-        return cache;
-    };
-
-    // used for testing purposes
-    exports._resetUnloaded = function(){
-        unloaded = false;
-    };
-
-    return exports;
-})({
-    node: require('./node.js'),
-    browser: require('./browser.js')
-});
+export function removeAll() {
+    LISTENERS.clear();
+}
