@@ -3,13 +3,17 @@ declare type addReturn = {
     run: () => any;
 };
 
-declare interface Unload {
-    add(fn: () => void): addReturn;
-    runAll(): Promise<any>;
-    removeAll(): void;
-    getSize(): number;
-};
 
-declare const unload: Unload;
+export function add(fn: () => void): addReturn;
+export function runAll(): Promise<any>;
+export function removeAll(): void;
+export function getSize(): number;
 
-export = unload;
+declare const _default: {
+    add,
+    runAll,
+    removeAll,
+    getSize
+}
+
+export default _default;
