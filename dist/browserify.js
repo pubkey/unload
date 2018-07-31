@@ -113,6 +113,13 @@ function removeAll() {
 function getSize() {
     return LISTENERS.size;
 }
+
+exports['default'] = {
+    add: add,
+    runAll: runAll,
+    removeAll: removeAll,
+    getSize: getSize
+};
 },{"./browser.js":1,"./node.js":7,"babel-runtime/helpers/typeof":6,"detect-node":72}],4:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/symbol"), __esModule: true };
 },{"core-js/library/fn/symbol":8}],5:[function(require,module,exports){

@@ -1,6 +1,6 @@
 {
   "name": "unload",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Execute code when the js-process exits. On all javascript-environments",
   "scripts": {
     "lint": "eslint src test",

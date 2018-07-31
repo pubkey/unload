@@ -45,3 +45,10 @@ export function removeAll() {
 export function getSize() {
     return LISTENERS.size;
 }
+
+export default {
+    add: add,
+    runAll: runAll,
+    removeAll: removeAll,
+    getSize: getSize
+};

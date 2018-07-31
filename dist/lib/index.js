@@ -70,3 +70,10 @@ function removeAll() {
 function getSize() {
     return LISTENERS.size;
 }
+
+exports['default'] = {
+    add: add,
+    runAll: runAll,
+    removeAll: removeAll,
+    getSize: getSize
+};

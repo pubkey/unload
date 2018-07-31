@@ -1,0 +1,6 @@
+test_tmp/
+config/
+test/
+.travis.yml
+.eslintignore
+.eslintrc.json
