@@ -1,7 +1,17 @@
 {
   "name": "unload",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Execute code when the js-process exits. On all javascript-environments",
+  "author": "pubkey",
+  "license": "Apache-2.0",
+  "keywords": [
+    "unload",
+    "exit",
+    "onunload",
+    "SIGINT",
+    "uncaughtException",
+    "beforeExit"
+  ],
   "scripts": {
     "lint": "eslint src test",
     "preversion": "npm run lint && npm run test",
@@ -23,16 +33,6 @@
     "type": "git",
     "url": "git+https://github.com/pubkey/unload.git"
   },
-  "author": "pubkey",
-  "license": "Apache-2.0",
-  "keywords": [
-    "unload",
-    "exit",
-    "onunload",
-    "SIGINT",
-    "uncaughtException",
-    "beforeExit"
-  ],
   "pre-commit": [
     "lint"
   ],
