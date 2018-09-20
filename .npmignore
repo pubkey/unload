@@ -4,4 +4,4 @@ test/
 .travis.yml
 .eslintignore
 .eslintrc.json
-.babelrc
+babel.config.js
