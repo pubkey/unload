@@ -26,7 +26,10 @@ function add(fn) {
     process.on('uncaughtException', err => {
         DEBUG && console.log('node: uncaughtException');
         return fn()
-            .then(() => Promise.reject(err));
+            .then(() => {
+                console.trace(err);
+                process.exit(1);
+            });
     });
 }
 
