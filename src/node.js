@@ -23,9 +23,10 @@ function add(fn) {
         return fn().then(() => process.exit());
     });
     // catches uncaught exceptions
-    process.on('uncaughtException', () => {
+    process.on('uncaughtException', err => {
         DEBUG && console.log('node: uncaughtException');
-        return fn().then(() => process.exit());
+        return fn()
+            .then(() => Promise.reject(err));
     });
 }
 

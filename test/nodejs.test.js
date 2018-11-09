@@ -60,6 +60,7 @@ describe('nodejs.test.js', function () {
     });
     describe('basic', function () {
         it('exception', function (done) {
+            this.timeout(10000);
             exec('node ./test/helper/node.js exception', function () {
                 pingCount().then(function (c) {
                     assert.equal(startCounter + 1, c);
