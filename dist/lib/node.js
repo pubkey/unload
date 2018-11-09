@@ -33,10 +33,11 @@ function add(fn) {
     });
   }); // catches uncaught exceptions
 
-  process.on('uncaughtException', function () {
+  process.on('uncaughtException', function (err) {
     DEBUG && console.log('node: uncaughtException');
     return fn().then(function () {
-      return process.exit();
+      console.trace(err);
+      process.exit(1);
     });
   });
 }
