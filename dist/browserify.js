@@ -11,8 +11,14 @@ function add(fn) {
   if (typeof WorkerGlobalScope === 'function' && self instanceof WorkerGlobalScope) {// this is run inside of a webworker
   } else {
     /**
+     * if we are on react-native, there is no window.addEventListener
+     * @link https://github.com/pubkey/unload/issues/6
+     */
+    if (typeof window.addEventListener !== 'function') return;
+    /**
      * for normal browser-windows, we use the beforeunload-event
      */
+
     window.addEventListener('beforeunload', function () {
       fn();
     }, true);
@@ -117,7 +123,7 @@ exports["default"] = _default;
 },{"./browser.js":1,"./node.js":6,"@babel/runtime/helpers/interopRequireDefault":4,"@babel/runtime/helpers/typeof":5,"detect-node":7}],4:[function(require,module,exports){
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
-    default: obj
+    "default": obj
   };
 }
 

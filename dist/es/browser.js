@@ -3,8 +3,14 @@ function add(fn) {
   if (typeof WorkerGlobalScope === 'function' && self instanceof WorkerGlobalScope) {// this is run inside of a webworker
   } else {
     /**
+     * if we are on react-native, there is no window.addEventListener
+     * @link https://github.com/pubkey/unload/issues/6
+     */
+    if (typeof window.addEventListener !== 'function') return;
+    /**
      * for normal browser-windows, we use the beforeunload-event
      */
+
     window.addEventListener('beforeunload', function () {
       fn();
     }, true);
