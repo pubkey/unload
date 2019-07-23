@@ -1,13 +1,15 @@
 language: node_js
 sudo: required
+cache: false
 os:
   - linux
 node_js:
-  - "10.6.0"
-before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - "11.9.0"
+services:
+  - xvfb
+addons:
+  chrome: stable
+  firefox: stable
 script:
 - travis_retry npm install --depth 0 --silent
 - npm run lint
