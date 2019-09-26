@@ -15,7 +15,7 @@ function startListening() {
 export function add(fn) {
     startListening();
     if (typeof fn !== 'function')
-        throw new Error('The "listener" argument must be of type Function');
+        throw new Error('Listener is no function');
     LISTENERS.add(fn);
 
     const addReturn = {
