@@ -13,7 +13,7 @@ function startListening() {
 
 export function add(fn) {
   startListening();
-  if (typeof fn !== 'function') throw new Error('The "listener" argument must be of type Function. Received type ' + typeof fn);
+  if (typeof fn !== 'function') throw new Error('Listener is no function');
   LISTENERS.add(fn);
   var addReturn = {
     remove: function remove() {
@@ -40,9 +40,3 @@ export function removeAll() {
 export function getSize() {
   return LISTENERS.size;
 }
-export default {
-  add: add,
-  runAll: runAll,
-  removeAll: removeAll,
-  getSize: getSize
-};

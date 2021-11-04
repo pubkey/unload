@@ -57,12 +57,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.add = add;
-exports.runAll = runAll;
-exports.removeAll = removeAll;
 exports.getSize = getSize;
-exports["default"] = void 0;
-
-var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
+exports.removeAll = removeAll;
+exports.runAll = runAll;
 
 var _detectNode = _interopRequireDefault(require("detect-node"));
 
@@ -82,7 +79,7 @@ function startListening() {
 
 function add(fn) {
   startListening();
-  if (typeof fn !== 'function') throw new Error('The "listener" argument must be of type Function. Received type ' + (0, _typeof2["default"])(fn));
+  if (typeof fn !== 'function') throw new Error('Listener is no function');
   LISTENERS.add(fn);
   var addReturn = {
     remove: function remove() {
@@ -112,15 +109,7 @@ function removeAll() {
 function getSize() {
   return LISTENERS.size;
 }
-
-var _default = {
-  add: add,
-  runAll: runAll,
-  removeAll: removeAll,
-  getSize: getSize
-};
-exports["default"] = _default;
-},{"./browser.js":1,"./node.js":6,"@babel/runtime/helpers/interopRequireDefault":4,"@babel/runtime/helpers/typeof":5,"detect-node":7}],4:[function(require,module,exports){
+},{"./browser.js":1,"./node.js":5,"@babel/runtime/helpers/interopRequireDefault":4,"detect-node":6}],4:[function(require,module,exports){
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
     "default": obj
@@ -128,27 +117,10 @@ function _interopRequireDefault(obj) {
 }
 
 module.exports = _interopRequireDefault;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 },{}],5:[function(require,module,exports){
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
-function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
 },{}],6:[function(require,module,exports){
-
-},{}],7:[function(require,module,exports){
 module.exports = false;
 
 

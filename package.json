@@ -1,6 +1,6 @@
 {
   "name": "unload",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Execute code when the js-process exits. On all javascript-environments",
   "author": "pubkey",
   "license": "Apache-2.0",

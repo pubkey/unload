@@ -6,12 +6,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.add = add;
-exports.runAll = runAll;
-exports.removeAll = removeAll;
 exports.getSize = getSize;
-exports["default"] = void 0;
-
-var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
+exports.removeAll = removeAll;
+exports.runAll = runAll;
 
 var _detectNode = _interopRequireDefault(require("detect-node"));
 
@@ -31,7 +28,7 @@ function startListening() {
 
 function add(fn) {
   startListening();
-  if (typeof fn !== 'function') throw new Error('The "listener" argument must be of type Function. Received type ' + (0, _typeof2["default"])(fn));
+  if (typeof fn !== 'function') throw new Error('Listener is no function');
   LISTENERS.add(fn);
   var addReturn = {
     remove: function remove() {
@@ -61,11 +58,3 @@ function removeAll() {
 function getSize() {
   return LISTENERS.size;
 }
-
-var _default = {
-  add: add,
-  runAll: runAll,
-  removeAll: removeAll,
-  getSize: getSize
-};
-exports["default"] = _default;
