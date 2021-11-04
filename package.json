@@ -1,6 +1,6 @@
 {
   "name": "unload",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Execute code when the js-process exits. On all javascript-environments",
   "author": "pubkey",
   "license": "Apache-2.0",
@@ -82,7 +82,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "detect-node": "^2.0.4"
+    "detect-node": "2.1.0"
   },
   "// browser": "this field contains files that will be empty objects in webpack-builds",
   "browser": {
