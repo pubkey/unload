@@ -4,12 +4,11 @@
  */
 const assert = require('assert');
 const path = require('path');
-const AsyncTestUtil = require('async-test-util');
 
 describe('typings.test.js', () => {
     const mainPath = path.join(__dirname, '../');
     const codeBase = `
-        import unload from '${mainPath}';
+        import { add, runAll, removeAll, getSize } from '${mainPath}';
     `;
     const transpileCode = async (code) => {
         const spawn = require('child-process-promise').spawn;
@@ -56,11 +55,11 @@ describe('typings.test.js', () => {
         it('should bet ok use some methods from the docs', async () => {
             const code = `
                 (async()=>{
-                    const added = unload.add(function(){
+                    const added = add(function(){
                         console.log('Ouch, Im dying.');
                     });
-                    unload.runAll();
-                    unload.removeAll();
+                    runAll();
+                    removeAll();
                     added.run();
                     added.remove();
                 })();

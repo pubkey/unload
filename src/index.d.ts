@@ -1,19 +1,9 @@
-declare type addReturn = {
+type AddReturn = {
     remove: () => void;
     run: () => any;
 };
 
-
-export function add(fn: () => void): addReturn;
+export function add(fn: () => void): AddReturn;
 export function runAll(): Promise<any>;
 export function removeAll(): void;
 export function getSize(): number;
-
-declare const _default: {
-    add,
-    runAll,
-    removeAll,
-    getSize
-}
-
-export default _default;
