@@ -66,3 +66,19 @@ unload.add(function(){
 
 unload.removeAll();
 ```
+
+
+# Sponsored by
+
+<p align="center">
+    <a href="https://rxdb.info/?utm_source=github&utm_medium=repo&utm_campaign=github-unload">
+        <img
+            src="https://github.com/pubkey/rxdb/raw/master/docs-src/files/logo/logo_text.svg"
+            alt="Sponsored by RxDB"
+            width="300"
+         />
+         <br />
+         <br />
+         <span>The <b>JavaScript Database</b></span>
+    </a>
+</p>

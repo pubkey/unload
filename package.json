@@ -33,6 +33,7 @@
     "type": "git",
     "url": "git+https://github.com/pubkey/unload.git"
   },
+  "funding": "https://github.com/sponsors/pubkey",
   "pre-commit": [
     "lint"
   ],
