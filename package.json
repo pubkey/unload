@@ -51,7 +51,7 @@
     "@babel/preset-env": "7.20.2",
     "@babel/types": "7.20.7",
     "assert": "2.0.0",
-    "async-test-util": "1.7.3",
+    "async-test-util": "2.0.0",
     "browserify": "17.0.0",
     "child_process": "1.0.2",
     "child-process-promise": "2.2.1",
