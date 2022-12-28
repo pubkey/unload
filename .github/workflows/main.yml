@@ -14,6 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set node version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
       # https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows
       - name: Reuse npm cache folder
         uses: actions/cache@v2
