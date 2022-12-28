@@ -5,10 +5,12 @@
     <script>
         var url = 'http://localhost:23230/';
 
-        console.log('add unload function');
+        console.log('within iframe: add unload function');
 
         var stop = window.unload.add(function () {
-            console.log('run unload-function');
+            console.log('within iframe: run unload-function');
+            window.parent.postMessage('UNLOAD_DONE', '*');
+
             var request = new XMLHttpRequest();
             /**
              * Notice, settings the 3rd parameter to false

@@ -24,8 +24,18 @@ describe('browser.test.js', () => {
     });
     it('spawn unload-iframe and close it', async function () {
         this.timeout(100 * 1000);
+        let unloadDoneCount = 0;
+        window.addEventListener('message', function (e) {
+            // Get the sent data
+            const data = e.data;
+            if (data === 'UNLOAD_DONE') {
+                console.log('# GOT MESAGE: ' + data);
+                unloadDoneCount = unloadDoneCount + 1;
+            }
+        });
+
         const logValue = new Date().getTime();
-        const countBefore = await pingServerCount();
+        const countBefore = unloadDoneCount;
 
         // create iframe
         const newIframe = async () => {
@@ -40,7 +50,7 @@ describe('browser.test.js', () => {
 
         // wait for load
         const ifrm = await newIframe();
-        await AsyncTestUtil.wait(1000);
+        await AsyncTestUtil.wait(2000);
 
         // close iframe
         ifrm.parentNode.removeChild(ifrm);
@@ -52,7 +62,7 @@ describe('browser.test.js', () => {
 
         // request should have been made
         await AsyncTestUtil.waitUntil(async () => {
-            const countAfter = await pingServerCount();
+            const countAfter = unloadDoneCount;
             return countAfter > countBefore;
         }, 0, 200);
     });
