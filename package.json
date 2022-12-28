@@ -79,10 +79,7 @@
     "watch": "1.0.2",
     "watchify": "3.11.1"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.6.2",
-    "detect-node": "2.1.0"
-  },
+  "dependencies": {},
   "// browser": "this field contains files that will be empty objects in webpack-builds",
   "browser": {
     "./src/node.js": false,
