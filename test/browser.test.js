@@ -22,7 +22,8 @@ describe('browser.test.js', () => {
         const countAfter = await pingServerCount();
         assert.ok(countBefore < countAfter);
     });
-    it('spawn unload-iframe and close it', async () => {
+    it('spawn unload-iframe and close it', async function () {
+        this.timeout(100 * 1000);
         const logValue = new Date().getTime();
         const countBefore = await pingServerCount();
 

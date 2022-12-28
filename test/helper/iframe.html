@@ -10,7 +10,12 @@
         var stop = window.unload.add(function () {
             console.log('run unload-function');
             var request = new XMLHttpRequest();
-            request.open('GET', url, false);  // 'false' makes the request synchronous
+            /**
+             * Notice, settings the 3rd parameter to false
+             * will make the request synchronous which is not allowed by chrome.
+             * @link https://chromestatus.com/feature/4664843055398912
+             */
+            request.open('GET', url, true);
             request.send(null);
         });
     </script>
