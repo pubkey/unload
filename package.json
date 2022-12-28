@@ -1,6 +1,6 @@
 {
   "name": "unload",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Execute code when the js-process exits. On all javascript-environments",
   "author": "pubkey",
   "license": "Apache-2.0",
@@ -80,11 +80,5 @@
     "watch": "1.0.2",
     "watchify": "3.11.1"
   },
-  "dependencies": {},
-  "// browser": "this field contains files that will be empty objects in webpack-builds",
-  "browser": {
-    "./src/node.js": false,
-    "./dist/es/node.js": false,
-    "./dist/lib/node.js": false
-  }
+  "dependencies": {}
 }
