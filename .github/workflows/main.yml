@@ -9,10 +9,15 @@ on:
 
 jobs:
   all:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set node version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
 
       # https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows
       - name: Reuse npm cache folder
@@ -35,11 +40,9 @@ jobs:
       - name: install node modules
         run: npm install --legacy-peer-deps
 
-      - name: build
-        run: npm run build
+      - run: npm run build
 
-      - name: test:node
-        run: npm run test:node
+      - run: npm run test:node
 
       - name: test browser
         uses: GabrielBB/xvfb-action@v1
