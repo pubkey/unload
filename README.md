@@ -2,7 +2,7 @@
 
 Run a piece of code whenever the javascript process stops/exits/quits. On **browsers, nodejs, electron, react-native, workers, iframes**. It also ensures that the exit-function is called only **once**.
 
-You should use this module when your write a npm-library where you dont know in which environments the users will run it.
+You should use this module when your write a npm library where you dont know in which environments the users will run it.
 
 # What does `unload` handle?
 
