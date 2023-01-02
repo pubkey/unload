@@ -78,7 +78,7 @@
     "uglify-js": "3.17.4",
     "util": "0.12.5",
     "watch": "1.0.2",
-    "watchify": "3.11.1"
+    "watchify": "4.0.0"
   },
   "dependencies": {}
 }
