@@ -72,7 +72,7 @@
     "pre-commit": "1.2.2",
     "request": "2.88.2",
     "request-promise-native": "1.0.9",
-    "rimraf": "5.0.8",
+    "rimraf": "5.0.9",
     "ts-node": "7.0.1",
     "typescript": "5.5.3",
     "uglify-js": "3.18.0",
