@@ -42,7 +42,7 @@
   "types": "./src/index.d.ts",
   "devDependencies": {
     "@babel/cli": "7.24.8",
-    "@babel/core": "7.24.8",
+    "@babel/core": "7.24.9",
     "@babel/plugin-check-constants": "7.0.0-beta.38",
     "@babel/plugin-proposal-object-rest-spread": "7.20.7",
     "@babel/plugin-transform-member-expression-literals": "7.24.7",
@@ -50,7 +50,7 @@
     "@babel/plugin-transform-runtime": "7.24.7",
     "@babel/polyfill": "7.12.1",
     "@babel/preset-env": "7.24.8",
-    "@babel/types": "7.24.8",
+    "@babel/types": "7.24.9",
     "assert": "2.1.0",
     "async-test-util": "2.5.0",
     "browserify": "17.0.0",
