@@ -75,7 +75,7 @@
     "rimraf": "6.0.1",
     "ts-node": "7.0.1",
     "typescript": "5.5.4",
-    "uglify-js": "3.19.2",
+    "uglify-js": "3.19.3",
     "util": "0.12.5",
     "watch": "1.0.2",
     "watchify": "4.0.0"
