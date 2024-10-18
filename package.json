@@ -68,7 +68,7 @@
     "karma-mocha": "2.0.1",
     "mocha": "10.7.3",
     "node-cmd": "5.0.0",
-    "npm-run-all2": "6.2.3",
+    "npm-run-all2": "6.2.4",
     "pre-commit": "1.2.2",
     "request": "2.88.2",
     "request-promise-native": "1.0.9",
