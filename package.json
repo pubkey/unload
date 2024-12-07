@@ -41,7 +41,7 @@
   "module": "./dist/es/index.js",
   "types": "./src/index.d.ts",
   "devDependencies": {
-    "@babel/cli": "7.25.9",
+    "@babel/cli": "7.26.4",
     "@babel/core": "7.26.0",
     "@babel/plugin-check-constants": "7.0.0-beta.38",
     "@babel/plugin-proposal-object-rest-spread": "7.20.7",
@@ -50,7 +50,7 @@
     "@babel/plugin-transform-runtime": "7.25.9",
     "@babel/polyfill": "7.12.1",
     "@babel/preset-env": "7.26.0",
-    "@babel/types": "7.26.0",
+    "@babel/types": "7.26.3",
     "assert": "2.1.0",
     "async-test-util": "2.5.0",
     "browserify": "17.0.1",
