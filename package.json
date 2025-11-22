@@ -73,7 +73,7 @@
     "request": "2.88.2",
     "request-promise-native": "1.0.9",
     "rimraf": "6.1.2",
-    "ts-node": "7.0.1",
+    "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "uglify-js": "3.19.3",
     "util": "0.12.5",
