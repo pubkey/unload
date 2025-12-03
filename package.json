@@ -60,7 +60,7 @@
     "cors": "2.8.5",
     "cross-env": "10.1.0",
     "eslint": "8.57.1",
-    "express": "5.2.0",
+    "express": "5.2.1",
     "http-server": "14.1.1",
     "karma": "6.4.4",
     "karma-browserify": "8.1.0",
